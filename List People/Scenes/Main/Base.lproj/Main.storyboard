@@ -20,28 +20,53 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0u-zK-QaU">
-                                <rect key="frame" x="207" y="475" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cAE-RU-fbo">
+                                <rect key="frame" x="207" y="447" width="0.0" height="56"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0u-zK-QaU">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTT-1M-Sr9">
+                                        <rect key="frame" x="-22" y="12" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="kPm-Q2-voL"/>
+                                            <constraint firstAttribute="width" secondItem="MTT-1M-Sr9" secondAttribute="height" multiplier="1:1" id="qxR-ge-hNF"/>
+                                        </constraints>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="retry_icn"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="MTT-1M-Sr9" firstAttribute="centerX" secondItem="cAE-RU-fbo" secondAttribute="centerX" id="0ED-7x-yg6"/>
+                                    <constraint firstItem="j0u-zK-QaU" firstAttribute="leading" secondItem="cAE-RU-fbo" secondAttribute="leading" id="Ad9-p8-JCR"/>
+                                    <constraint firstItem="MTT-1M-Sr9" firstAttribute="top" secondItem="j0u-zK-QaU" secondAttribute="bottom" constant="12" id="Ee8-1e-toK"/>
+                                    <constraint firstAttribute="bottom" secondItem="MTT-1M-Sr9" secondAttribute="bottom" id="ctG-k7-WFV"/>
+                                    <constraint firstItem="j0u-zK-QaU" firstAttribute="top" secondItem="cAE-RU-fbo" secondAttribute="top" id="pHM-fC-nVi"/>
+                                    <constraint firstAttribute="trailing" secondItem="j0u-zK-QaU" secondAttribute="trailing" id="wYf-bt-uvb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="cAE-RU-fbo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4AG-Bu-Nfv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wlH-dt-aDx" secondAttribute="bottom" id="5dX-Ai-tig"/>
+                            <constraint firstItem="cAE-RU-fbo" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="AWo-xj-2xS"/>
                             <constraint firstItem="wlH-dt-aDx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="C9X-f7-FQg"/>
                             <constraint firstItem="wlH-dt-aDx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="NB3-Yl-PGn"/>
-                            <constraint firstItem="j0u-zK-QaU" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="g42-gg-8f1"/>
                             <constraint firstItem="wlH-dt-aDx" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="wIC-bW-auf"/>
-                            <constraint firstItem="j0u-zK-QaU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="wew-mH-OF3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qeX-3y-PVC"/>
                     <connections>
+                        <outlet property="emptyListLabel" destination="j0u-zK-QaU" id="LQf-Bs-Uvt"/>
                         <outlet property="listTableView" destination="wlH-dt-aDx" id="1WL-Pn-Bq0"/>
-                        <outlet property="resultLabel" destination="j0u-zK-QaU" id="E5j-85-ICS"/>
+                        <outlet property="refreshButton" destination="MTT-1M-Sr9" id="PaQ-4j-jMe"/>
+                        <outlet property="refreshView" destination="cAE-RU-fbo" id="odg-C0-DiK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -68,6 +93,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="retry_icn" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

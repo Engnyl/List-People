@@ -32,7 +32,7 @@ final class ListViewModel: ListViewModelProtocol {
     
     func loadView() {
         self.notifyViewController(.prepareView)
-        self.getPeopleList(additionalListCall: false)
+        self.getPeopleList(initialListCall: true)
     }
     
     func getPerson(at indexPath : IndexPath) -> Person {
@@ -50,8 +50,10 @@ final class ListViewModel: ListViewModelProtocol {
         self.cellViewModels = [PersonCellViewModel]()
     }
     
-    func getPeopleList(additionalListCall: Bool) {
-        if !additionalListCall {
+    func getPeopleList(initialListCall: Bool) {
+        Loader.startLoading()
+        
+        if initialListCall {
             self.resetQuery()
         }
         
@@ -62,16 +64,18 @@ final class ListViewModel: ListViewModelProtocol {
                 self.next = fetchResponse!.next
                 self.canGetMorePeople = self.people.count < fetchResponse!.peopleCount
                 
-                if additionalListCall {
-                    self.notifyViewController(.showListFethed(message: "More people list fetched successfully.", emptyList: false))
+                if initialListCall {
+                    self.notifyViewController(.showListFethed(message: (self.people.count == 0) ? "No one here :)" : "Initial people list fetched successfully.", emptyList: (self.people.count == 0)))
                 }
                 else {
-                    self.notifyViewController(.showListFethed(message: (self.people.count == 0) ? "No one here :)" : "Initial people list fetched successfully.", emptyList: (self.people.count == 0)))
+                    self.notifyViewController(.showListFethed(message: "More people list fetched successfully.", emptyList: false))
                 }
             }
             else if (fetchError != nil) {
                 self.notifyViewController(.showListError(message: fetchError!.errorDescription))
             }
+            
+            Loader.stopLoading()
         }
     }
     

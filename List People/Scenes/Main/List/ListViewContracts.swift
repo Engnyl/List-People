@@ -18,7 +18,7 @@ protocol ListViewModelProtocol {
     func getPerson(at indexPath : IndexPath) -> Person
     func getCellViewModel(at indexPath: IndexPath) -> PersonCellViewModel
     func resetQuery()
-    func getPeopleList(additionalListCall: Bool)
+    func getPeopleList(initialListCall: Bool)
 }
 
 enum ListViewModelOutput {

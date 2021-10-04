@@ -16,7 +16,9 @@ final class ListViewController: UIViewController {
             listTableView.register(UINib.init(nibName: "PersonTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "personCell")
         }
     }
-    @IBOutlet weak var resultLabel: UILabel!
+    @IBOutlet weak var emptyListLabel: UILabel!
+    @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet weak var refreshView: UIView!
     let refreshControl = UIRefreshControl()
     
     var viewModel: ListViewModelProtocol! {
@@ -37,8 +39,12 @@ final class ListViewController: UIViewController {
         }
     }
     
-    @objc func refresh(_ sender: AnyObject) {
-        viewModel.getPeopleList(additionalListCall: false)
+    func retry() {
+        viewModel.getPeopleList(initialListCall: false)
+     }
+    
+    @objc func refresh(_ sender: UIRefreshControl) {
+        viewModel.getPeopleList(initialListCall: true)
      }
 }
 
@@ -86,7 +92,7 @@ extension ListViewController: UITableViewDelegate {
             let lastRowIndex: Int = tableView.numberOfRows(inSection: lastSectionIndex) - 1
             
             if viewModel.canGetMorePeople && (indexPath.section == lastSectionIndex) && (indexPath.row == lastRowIndex) {
-                viewModel.getPeopleList(additionalListCall: true)
+                viewModel.getPeopleList(initialListCall: false)
             }
         }
     }
@@ -98,23 +104,29 @@ extension ListViewController: ListViewModelDelegate {
     func handleViewModelOutput(_ output: ListViewModelOutput) {
         switch output {
         case .prepareView:
+            refreshButton.addTarget(self, action: #selector(self.refresh(_:)), for: .touchUpInside)
             refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
             listTableView.addSubview(refreshControl)
             
         case .showListFethed(let message, let emptyList):
-            resultLabel.isHidden = !emptyList
             refreshControl.endRefreshing()
+            refreshView.isHidden = !emptyList
             
             if emptyList {
-                resultLabel.text = message
+                emptyListLabel.text = message
             }
             
             print(message)
             
         case .showListError(let message):
-            resultLabel.isHidden = false
             refreshControl.endRefreshing()
-            resultLabel.text = message
+            
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Retry", style: UIAlertAction.Style.default) { action -> Void in
+                self.retry()
+            })
+            self.present(alert, animated: true, completion: nil)
             
             print(message)
         }
