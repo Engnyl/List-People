@@ -13,7 +13,8 @@ final class ListViewModel: ListViewModelProtocol {
     var numberOfCells: Int {
         return people.count
     }
-    var next: Int?
+    var next: String?
+    var canGetMorePeople: Bool = false
     
     var reloadListTableViewClosure: (()->())?
     
@@ -31,7 +32,7 @@ final class ListViewModel: ListViewModelProtocol {
     
     func loadView() {
         self.notifyViewController(.prepareView)
-        self.getInitialPeopleList()
+        self.getPeopleList(additionalListCall: false)
     }
     
     func getPerson(at indexPath : IndexPath) -> Person {
@@ -44,28 +45,34 @@ final class ListViewModel: ListViewModelProtocol {
     
     func resetQuery() {
         self.next = nil
+        self.canGetMorePeople = false
         self.people = [Person]()
         self.cellViewModels = [PersonCellViewModel]()
     }
     
-    func getInitialPeopleList() {
-        self.resetQuery()
+    func getPeopleList(additionalListCall: Bool) {
+        if !additionalListCall {
+            self.resetQuery()
+        }
         
-        DataSource.fetch(next: ((self.next != nil) ? String(self.next!) : nil)) { (fetchResponse, fetchError) in
+        DataSource.fetch(next: self.next) { (fetchResponse, fetchError) in
             if (fetchResponse != nil) {
                 self.processPeopleList(fetchResponse: fetchResponse!)
                 
-                let emptyList = (self.people.count == 0)
-                self.notifyViewController(.showListFethed(message: emptyList ? "No one here :)" : "Initial people list fetched successfully.", emptyList: emptyList))
+                self.next = fetchResponse!.next
+                self.canGetMorePeople = self.people.count < fetchResponse!.peopleCount
+                
+                if additionalListCall {
+                    self.notifyViewController(.showListFethed(message: "More people list fetched successfully.", emptyList: false))
+                }
+                else {
+                    self.notifyViewController(.showListFethed(message: (self.people.count == 0) ? "No one here :)" : "Initial people list fetched successfully.", emptyList: (self.people.count == 0)))
+                }
             }
             else if (fetchError != nil) {
                 self.notifyViewController(.showListError(message: fetchError!.errorDescription))
             }
         }
-    }
-    
-    func getMorePeopleList() {
-        
     }
     
     private func processPeopleList(fetchResponse: FetchResponse) {

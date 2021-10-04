@@ -38,7 +38,7 @@ final class ListViewController: UIViewController {
     }
     
     @objc func refresh(_ sender: AnyObject) {
-        viewModel.getInitialPeopleList()
+        viewModel.getPeopleList(additionalListCall: false)
      }
 }
 
@@ -85,8 +85,8 @@ extension ListViewController: UITableViewDelegate {
             let lastSectionIndex: Int = tableView.numberOfSections - 1
             let lastRowIndex: Int = tableView.numberOfRows(inSection: lastSectionIndex) - 1
             
-            if (indexPath.section == lastSectionIndex) && (indexPath.row == lastRowIndex) {
-                viewModel.getMorePeopleList()
+            if viewModel.canGetMorePeople && (indexPath.section == lastSectionIndex) && (indexPath.row == lastRowIndex) {
+                viewModel.getPeopleList(additionalListCall: true)
             }
         }
     }

@@ -21,10 +21,12 @@ public class Person {
 public class FetchResponse {
     let people: [Person]
     let next: String?
+    let peopleCount: Int
     
-    init(people: [Person], next: String?) {
+    init(people: [Person], next: String?, peopleCount: Int) {
         self.people = people
         self.next = next
+        self.peopleCount = peopleCount
     }
 }
 
@@ -118,7 +120,8 @@ public class DataSource {
                     responseNext = nil
                 }
                 response = FetchResponse(people: fetchedPeople,
-                                           next: responseNext)
+                                         next: responseNext,
+                                         peopleCount: peopleCount)
             }
         }
 

@@ -10,15 +10,15 @@ import Foundation
 protocol ListViewModelProtocol {
     var delegate: ListViewModelDelegate? { get set }
     var numberOfCells: Int { get }
-    var next: Int? { get set }
+    var next: String? { get set }
+    var canGetMorePeople: Bool { get set }
     var reloadListTableViewClosure: (()->())? { get set }
     
     func loadView()
     func getPerson(at indexPath : IndexPath) -> Person
     func getCellViewModel(at indexPath: IndexPath) -> PersonCellViewModel
     func resetQuery()
-    func getInitialPeopleList()
-    func getMorePeopleList()
+    func getPeopleList(additionalListCall: Bool)
 }
 
 enum ListViewModelOutput {
