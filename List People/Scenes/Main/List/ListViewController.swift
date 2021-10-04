@@ -24,7 +24,6 @@ final class ListViewController: UIViewController {
     var viewModel: ListViewModelProtocol! {
         didSet {
             viewModel.delegate = self
-            viewModel.loadView()
         }
     }
 
@@ -32,6 +31,7 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel = ListViewModel()
+        viewModel.loadView()
         viewModel.reloadListTableViewClosure = {[weak self] in
             DispatchQueue.main.async {
                 self?.listTableView.reloadData()
