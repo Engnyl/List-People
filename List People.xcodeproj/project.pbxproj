@@ -88,14 +88,12 @@
 		A95B1611270B0441000D8F8A /* List People */ = {
 			isa = PBXGroup;
 			children = (
+				A9DF3A42270C7D8A001DEC48 /* Delegates */,
 				A985328A270B0CAD006346F7 /* API */,
 				A91DBD22270B635F006C017A /* Helpers */,
 				A91DBD1F270B5E70006C017A /* Resources */,
 				A9853279270B093B006346F7 /* Scenes */,
 				A9853280270B0A61006346F7 /* Views */,
-				A95B1612270B0441000D8F8A /* AppDelegate.swift */,
-				A95B1614270B0441000D8F8A /* SceneDelegate.swift */,
-				A95B161D270B0443000D8F8A /* LaunchScreen.storyboard */,
 				A95B1620270B0443000D8F8A /* Info.plist */,
 			);
 			path = "List People";
@@ -131,6 +129,7 @@
 		A9853280270B0A61006346F7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A95B161D270B0443000D8F8A /* LaunchScreen.storyboard */,
 				A91DBD20270B5F18006C017A /* Loader.swift */,
 				A9853281270B0A6E006346F7 /* TableViewCells */,
 			);
@@ -169,6 +168,15 @@
 				A985328C270B0CBC006346F7 /* DataSource.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A9DF3A42270C7D8A001DEC48 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				A95B1612270B0441000D8F8A /* AppDelegate.swift */,
+				A95B1614270B0441000D8F8A /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
