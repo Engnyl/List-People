@@ -85,22 +85,23 @@ final class ListViewModel: ListViewModelProtocol {
         
         for person in fetchResponse.people {
             people.append(person)
-            cellViewModels.append(createPersonCellViewModel(person: person))
         }
         
         if self.people.count > 0 {
             self.people.append(contentsOf: people)
+            self.people = self.people.uniques(by: \.id)
         }
         else {
             self.people = people
         }
         
-        if self.cellViewModels.count > 0 {
-            self.cellViewModels.append(contentsOf: cellViewModels)
+        self.people = self.people.sorted { $0.id < $1.id }
+        
+        for person in self.people {
+            cellViewModels.append(createPersonCellViewModel(person: person))
         }
-        else {
-            self.cellViewModels = cellViewModels
-        }
+        
+        self.cellViewModels = cellViewModels
     }
     
     private func createPersonCellViewModel(person: Person) -> PersonCellViewModel {
